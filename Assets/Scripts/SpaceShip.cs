@@ -20,12 +20,15 @@ public class SpaceShip : MonoBehaviour
     public int shieldCD;
     public Transform pfhealthBar;
 
+    public Shield shield;
+
     public Projectile projectile;
     public Transform shootingPoint;
 
     public Text ammoText;
     public Text maxAmmoText;
     public Text ShieldRemainingCooldownText;
+    //private string txt = "p";
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +51,20 @@ public class SpaceShip : MonoBehaviour
 
         Move(movementSpeed);
 
-        //ammoText.text = currentAmmo.ToString();
-        //maxAmmoText.text = maxAmmo.ToString();
+        var remainingTime = nextFireTime - Time.time;
+        if (remainingTime <= 0)
+        {
+            ShieldRemainingCooldownText.fontSize = 15;
+            ShieldRemainingCooldownText.text = "Shield Up";
+        }
+        else
+        {
+            ShieldRemainingCooldownText.fontSize = 22;
+            ShieldRemainingCooldownText.text = remainingTime.ToString("0.0");
+        }
+
+        ammoText.text = currentAmmo.ToString();
+        maxAmmoText.text = maxAmmo.ToString();
 
         if (isReloading)
         {
@@ -101,15 +116,16 @@ public class SpaceShip : MonoBehaviour
     {
         if (Time.time > nextFireTime)
         {
-            GameObject prefab = Resources.Load("bouclier") as GameObject;
+            //GameObject prefab = Resources.Load("bouclier") as GameObject;
 
-            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            Quaternion rotation = transform.rotation;
             var position = transform.position;
-            GameObject shieldObject = Instantiate(prefab, position, rotation);
+            //GameObject shieldObject = Instantiate(prefab, position, rotation);
+            Shield shieldObject = Instantiate(shield, position, rotation);
             shieldObject.transform.parent = transform;
-            Shield shield = shieldObject.GetComponent<Shield>();
-            shield.setUpTime(shieldUpTime);
-            shield.tag = "Shield";
+            //Shield shield = shieldObject.GetComponent<Shield>();
+            shieldObject.setUpTime(shieldUpTime);
+            shieldObject.tag = "Shield";
             isShielded = true;
             nextFireTime = Time.time + shieldCD;
             yield return new WaitForSeconds(shieldUpTime);
