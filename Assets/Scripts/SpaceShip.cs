@@ -28,27 +28,26 @@ public class SpaceShip : MonoBehaviour
     public Text ammoText;
     public Text maxAmmoText;
     public Text ShieldRemainingCooldownText;
-    //private string txt = "p";
 
     // Start is called before the first frame update
     void Start()
     {
         currentAmmo = maxAmmo;
 
-        Transform healthBarTransform = Instantiate(pfhealthBar, transform.position - transform.forward * 15f + transform.right * 2.5f, Quaternion.Euler(90, transform.eulerAngles.y, transform.eulerAngles.z));
+        Transform healthBarTransform = Instantiate(pfhealthBar, transform.position + transform.right * -1.1f, Quaternion.Euler(0, 0, 90));
+
+        healthBarTransform.parent = transform;
         HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
-        healthBar.transform.parent = transform;
 
         healthBar.Setup(healthSystem);
 
-        Physics.IgnoreLayerCollision(8, 8);
+        //Physics.IgnoreLayerCollision(8, 8);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
         Move(movementSpeed);
 
         var remainingTime = nextFireTime - Time.time;

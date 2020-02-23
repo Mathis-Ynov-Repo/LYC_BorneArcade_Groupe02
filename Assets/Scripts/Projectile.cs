@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     {
         this.speed = speed;
     }
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         //next - check if we have collided with anything but player/enemy
         if (collision.gameObject.tag == "Ennemy")
@@ -46,9 +46,5 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-    void OnTriggerEnter2D(Collider2D collider2D)
-    {
-        Destroy(gameObject);
     }
 }
