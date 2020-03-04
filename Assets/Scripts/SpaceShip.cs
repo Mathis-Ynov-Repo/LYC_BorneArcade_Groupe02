@@ -31,6 +31,7 @@ public class SpaceShip : MonoBehaviour
     public Text ammoText;
     public Text maxAmmoText;
     public Text ShieldRemainingCooldownText;
+    public Text StocksLeftText;
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +78,7 @@ public class SpaceShip : MonoBehaviour
         }
 
         maxAmmoText.text = maxAmmo.ToString();
+        StocksLeftText.text = stocks.ToString();
 
         if (isReloading)
         {
@@ -161,8 +163,9 @@ public class SpaceShip : MonoBehaviour
         if(!isShielded && !isInvincible)
         {
             healthSystem.Damage(damage);
-            if (healthSystem.GetHealth() == 0 && stocks == 0)
+            if (healthSystem.GetHealth() == 0 && stocks == 1)
             {
+                StocksLeftText.text = "0";
                 Die();
             }
             else if (healthSystem.GetHealth() == 0)
