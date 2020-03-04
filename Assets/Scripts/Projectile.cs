@@ -25,6 +25,7 @@ public class Projectile : MonoBehaviour
     {
         this.speed = speed;
     }
+    /*
     void OnCollisionEnter2D(Collision2D collision)
     {
         //next - check if we have collided with anything but player/enemy
@@ -47,4 +48,28 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    */
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        //next - check if we have collided with anything but player/enemy
+        if (collision.gameObject.tag == "Ennemy")
+        {
+            collision.gameObject.GetComponent<CubeTest>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Shield")
+        {
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<SpaceShip>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

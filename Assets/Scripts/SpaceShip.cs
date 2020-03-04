@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SpaceShip : MonoBehaviour
 {
     private int id;
+    public int stocks;
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
     public int movementSpeed = 100;
@@ -15,8 +16,10 @@ public class SpaceShip : MonoBehaviour
     private int maxAmmo = 10;
     private int currentAmmo;
     private int reloadTime = 5;
+    private int invicibilityTime = 2;
     private bool isReloading = false;
     private bool isShielded = false;
+    private bool isInvincible = false;
     public int shieldCD;
     public Transform pfhealthBar;
 
@@ -62,7 +65,17 @@ public class SpaceShip : MonoBehaviour
             ShieldRemainingCooldownText.text = remainingTime.ToString("0.0");
         }
 
-        ammoText.text = currentAmmo.ToString();
+        if (currentAmmo == 0)
+        {
+            ammoText.fontSize = 15;
+            ammoText.text = "RLD";
+        }
+        else
+        {
+            ammoText.fontSize = 22;
+            ammoText.text = currentAmmo.ToString();
+        }
+
         maxAmmoText.text = maxAmmo.ToString();
 
         if (isReloading)
@@ -111,6 +124,14 @@ public class SpaceShip : MonoBehaviour
         currentAmmo = maxAmmo;
         isReloading = false;
     }
+    IEnumerator Invicible()
+    {
+        isInvincible = true;
+        Debug.Log(isInvincible);
+        yield return new WaitForSeconds(invicibilityTime);
+        Debug.Log(isInvincible);
+        isInvincible = false;
+    }
     IEnumerator Protect()
     {
         if (Time.time > nextFireTime)
@@ -137,12 +158,23 @@ public class SpaceShip : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if(!isShielded)
+        if(!isShielded && !isInvincible)
         {
             healthSystem.Damage(damage);
-            if (healthSystem.GetHealth() == 0)
+            if (healthSystem.GetHealth() == 0 && stocks == 0)
             {
                 Die();
+            }
+            else if (healthSystem.GetHealth() == 0)
+            {
+                stocks -= 1;
+                StartCoroutine(Invicible());
+                healthSystem = new HealthSystem(100);
+                var healthbar = transform.Find("healthbar 1(Clone)");
+                healthbar.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 1);
+                HealthBar healthBar = healthbar.GetComponent<HealthBar>();
+
+                healthBar.Setup(healthSystem);
             }
         }
 
