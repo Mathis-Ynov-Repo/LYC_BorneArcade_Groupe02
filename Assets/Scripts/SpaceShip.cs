@@ -129,9 +129,13 @@ public class SpaceShip : MonoBehaviour
     IEnumerator Invicible()
     {
         isInvincible = true;
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        transform.GetChild(1).gameObject.SetActive(false);
         Debug.Log(isInvincible);
         yield return new WaitForSeconds(invicibilityTime);
         Debug.Log(isInvincible);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        transform.GetChild(1).gameObject.SetActive(true);
         isInvincible = false;
     }
     IEnumerator Protect()
