@@ -6,12 +6,21 @@ public class Projectile : MonoBehaviour
 {
 
     public int damage = 10;
-    private int speed = 5;
+    public float speed = 5;
+    private string shooterTag;
+    private string targetTag;
     private Rigidbody2D theRB;
     // Start is called before the first frame update
     void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
+        if(shooterTag == "Player1")
+        {
+            targetTag = "Player2";
+        } else
+        {
+            targetTag = "Player1";
+        }
     }
 
     // Update is called once per frame
@@ -21,9 +30,13 @@ public class Projectile : MonoBehaviour
         //theRB.velocity = new Vector2(speed * transform.localScale.x, 0);
         //transform.Translate(Vector2.right * Time.deltaTime * speed);
     }
-    public void setSpeed(int speed)
+    public void setSpeed(float speed)
     {
         this.speed = speed;
+    }
+    public void setShooterTag(string shooterTag)
+    {
+        this.shooterTag = shooterTag;
     }
     /*
     void OnCollisionEnter2D(Collision2D collision)
@@ -61,10 +74,14 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == targetTag)
         {
             collision.gameObject.GetComponent<SpaceShip>().TakeDamage(damage);
             Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == shooterTag)
+        {
+            return;
         }
         else
         {

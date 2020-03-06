@@ -8,8 +8,10 @@ public class SpaceShip : MonoBehaviour
     public int stocks;
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
-    public int movementSpeed = 100;
-    public int projectileSpeed;
+    public float movementSpeed;
+    public float baseMovementSpeed = 100;
+    public float projectileSpeed;
+    public float baseProjectileSpeed;
     private string color;
     public int shieldUpTime;
     private float nextFireTime = 0;
@@ -19,7 +21,7 @@ public class SpaceShip : MonoBehaviour
     private int invicibilityTime = 2;
     private bool isReloading = false;
     private bool isShielded = false;
-    private bool isInvincible = false;
+    public bool isInvincible = false;
     public int shieldCD;
     public Transform pfhealthBar;
 
@@ -46,6 +48,8 @@ public class SpaceShip : MonoBehaviour
         healthBar.Setup(healthSystem);
 
         //Physics.IgnoreLayerCollision(8, 8);
+        movementSpeed = baseMovementSpeed;
+        projectileSpeed = baseProjectileSpeed;
 
     }
 
@@ -80,6 +84,11 @@ public class SpaceShip : MonoBehaviour
         maxAmmoText.text = maxAmmo.ToString();
         StocksLeftText.text = stocks.ToString();
 
+        if (isInvincible)
+        {
+            return;
+        }
+
         if (isReloading)
         {
             if (Input.GetButtonUp("Fire2"))
@@ -97,6 +106,7 @@ public class SpaceShip : MonoBehaviour
             StartCoroutine(Reload());
             return;
         }
+        
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
@@ -106,7 +116,6 @@ public class SpaceShip : MonoBehaviour
             StartCoroutine(Protect());
         }
 
-
     }
     void Shoot()
     {
@@ -114,6 +123,7 @@ public class SpaceShip : MonoBehaviour
 
         Projectile projectileObject = Instantiate(projectile, shootingPoint.position, shootingPoint.rotation);
         projectileObject.setSpeed(projectileSpeed);
+        projectileObject.setShooterTag(gameObject.tag);
     }
     IEnumerator Reload()
     {
@@ -131,11 +141,11 @@ public class SpaceShip : MonoBehaviour
         isInvincible = true;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         transform.GetChild(1).gameObject.SetActive(false);
-
         yield return new WaitForSeconds(invicibilityTime);
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
         isInvincible = false;
+        currentAmmo = maxAmmo;
     }
     IEnumerator Protect()
     {
@@ -166,6 +176,8 @@ public class SpaceShip : MonoBehaviour
         if(!isShielded && !isInvincible)
         {
             healthSystem.Damage(damage);
+            movementSpeed = movementSpeed * 1.05f;
+            projectileSpeed = projectileSpeed * 1.1f;
             if (healthSystem.GetHealth() == 0 && stocks == 1)
             {
                 StocksLeftText.text = "0";
@@ -176,6 +188,8 @@ public class SpaceShip : MonoBehaviour
                 stocks -= 1;
                 StartCoroutine(Invicible());
                 healthSystem = new HealthSystem(100);
+                movementSpeed = baseMovementSpeed;
+                projectileSpeed = baseProjectileSpeed;
                 var healthbar = transform.Find("healthbar 1(Clone)");
                 healthbar.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 1);
                 HealthBar healthBar = healthbar.GetComponent<HealthBar>();
@@ -190,7 +204,7 @@ public class SpaceShip : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Move(int speed)
+    public void Move(float speed)
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
