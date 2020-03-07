@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class SpaceShip : MonoBehaviour
 {
+    //attributes
+
     private int id;
     //public int stocks;
     //private int lifePoints = 100;
@@ -33,10 +35,15 @@ public class SpaceShip : MonoBehaviour
     public Projectile projectile;
     public Transform shootingPoint;
 
+    //Text
+
     public Text ammoText;
     public Text maxAmmoText;
     public Text ShieldRemainingCooldownText;
     public Text StocksLeftText;
+
+    //variable
+    Coroutine ReloadCoroutine = null;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +56,7 @@ public class SpaceShip : MonoBehaviour
         healthBarTransform.parent = transform;
         HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
 
+        
         healthBar.Setup(healthSystem);
 
         //Physics.IgnoreLayerCollision(8, 8);
@@ -106,7 +114,7 @@ public class SpaceShip : MonoBehaviour
         }
         if (currentAmmo <= 0)
         {
-            StartCoroutine(Reload());
+            ReloadCoroutine = StartCoroutine(Reload());
             return;
         }
         
@@ -154,6 +162,12 @@ public class SpaceShip : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
         isInvincible = false;
+        if(isReloading)
+        {
+            isReloading = false;
+            StopCoroutine(ReloadCoroutine);
+        }
+        nextFireTime = 0;
         currentAmmo = maxAmmo;
     }
     IEnumerator Protect()
@@ -229,7 +243,6 @@ public class SpaceShip : MonoBehaviour
                 //stocks -= 1;
                 player.SetStocks(player.GetStocks() - 1);
                 StocksLeftText.text = player.GetStocks().ToString();
-                Debug.Log(player.GetStocks());
                 StartCoroutine(Invicible());
                 healthSystem = new HealthSystem(100);
                 movementSpeed = baseMovementSpeed;
