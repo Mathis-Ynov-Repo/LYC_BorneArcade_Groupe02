@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SpaceShip : MonoBehaviour
 {
     private int id;
-    public int stocks;
+    //public int stocks;
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
     public float movementSpeed;
@@ -15,6 +15,8 @@ public class SpaceShip : MonoBehaviour
     private string color;
     public int shieldUpTime;
     private float nextFireTime = 0;
+    private float nextShootingTime = 0;
+    private float fireRate = 0.15f;
     private int maxAmmo = 10;
     private int currentAmmo;
     private int reloadTime = 5;
@@ -24,6 +26,7 @@ public class SpaceShip : MonoBehaviour
     public bool isInvincible = false;
     public int shieldCD;
     public Transform pfhealthBar;
+    public Player player;
 
     public Shield shield;
 
@@ -39,6 +42,7 @@ public class SpaceShip : MonoBehaviour
     void Start()
     {
         currentAmmo = maxAmmo;
+        StocksLeftText.text = player.GetStocks().ToString();
 
         Transform healthBarTransform = Instantiate(pfhealthBar, transform.position + transform.right * -1.1f, Quaternion.Euler(0, 0, 90));
 
@@ -82,7 +86,6 @@ public class SpaceShip : MonoBehaviour
         }
 
         maxAmmoText.text = maxAmmo.ToString();
-        StocksLeftText.text = stocks.ToString();
 
         if (isInvincible)
         {
@@ -109,7 +112,12 @@ public class SpaceShip : MonoBehaviour
         
         if (Input.GetButtonDown("Fire1"))
         {
-            Shoot();
+            if(Time.time > nextShootingTime )
+            {
+                Shoot();
+                nextShootingTime = Time.time + fireRate;
+            }
+            
         }
         if (Input.GetButtonUp("Fire2"))
         {
@@ -124,6 +132,7 @@ public class SpaceShip : MonoBehaviour
         Projectile projectileObject = Instantiate(projectile, shootingPoint.position, shootingPoint.rotation);
         projectileObject.setSpeed(projectileSpeed);
         projectileObject.setShooterTag(gameObject.tag);
+        projectileObject.setShooter(this.player);
     }
     IEnumerator Reload()
     {
@@ -161,6 +170,7 @@ public class SpaceShip : MonoBehaviour
             //Shield shield = shieldObject.GetComponent<Shield>();
             shieldObject.setUpTime(shieldUpTime);
             shieldObject.tag = "Shield";
+            shieldObject.setParent(player);
             isShielded = true;
             nextFireTime = Time.time + shieldCD;
             yield return new WaitForSeconds(shieldUpTime);
@@ -171,21 +181,55 @@ public class SpaceShip : MonoBehaviour
         }
 
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Player opponent)
     {
         if(!isShielded && !isInvincible)
         {
+            opponent.score += 10;
             healthSystem.Damage(damage);
             movementSpeed = movementSpeed * 1.05f;
             projectileSpeed = projectileSpeed * 1.1f;
-            if (healthSystem.GetHealth() == 0 && stocks == 1)
+            if (healthSystem.GetHealth() == 0 && player.GetStocks() == 1)
             {
                 StocksLeftText.text = "0";
                 Die();
             }
             else if (healthSystem.GetHealth() == 0)
             {
-                stocks -= 1;
+                //stocks -= 1;
+                player.SetStocks(player.GetStocks() - 1);
+                StocksLeftText.text = player.GetStocks().ToString();
+                StartCoroutine(Invicible());
+                healthSystem = new HealthSystem(100);
+                movementSpeed = baseMovementSpeed;
+                projectileSpeed = baseProjectileSpeed;
+                var healthbar = transform.Find("healthbar 1(Clone)");
+                healthbar.Find("Bar").localScale = new Vector3(healthSystem.GetHealthPercent(), 1);
+                HealthBar healthBar = healthbar.GetComponent<HealthBar>();
+
+                healthBar.Setup(healthSystem);
+            }
+        } 
+
+    }
+    public void TakeDamage(int damage)
+    {
+        if (!isShielded && !isInvincible)
+        {
+            healthSystem.Damage(damage);
+            movementSpeed = movementSpeed * 1.05f;
+            projectileSpeed = projectileSpeed * 1.1f;
+            if (healthSystem.GetHealth() == 0 && player.GetStocks() == 1)
+            {
+                StocksLeftText.text = "0";
+                Die();
+            }
+            else if (healthSystem.GetHealth() == 0)
+            {
+                //stocks -= 1;
+                player.SetStocks(player.GetStocks() - 1);
+                StocksLeftText.text = player.GetStocks().ToString();
+                Debug.Log(player.GetStocks());
                 StartCoroutine(Invicible());
                 healthSystem = new HealthSystem(100);
                 movementSpeed = baseMovementSpeed;

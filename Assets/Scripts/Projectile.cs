@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     private string shooterTag;
     private string targetTag;
     private Rigidbody2D theRB;
+    private Player shooter;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +39,14 @@ public class Projectile : MonoBehaviour
     {
         this.shooterTag = shooterTag;
     }
+    public void setShooter(Player player)
+    {
+        this.shooter = player;
+    }
+    public Player getShooter()
+    {
+        return shooter;
+    }
     /*
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -64,19 +73,9 @@ public class Projectile : MonoBehaviour
     */
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //next - check if we have collided with anything but player/enemy
-        if (collision.gameObject.tag == "Ennemy")
-        {
-            collision.gameObject.GetComponent<CubeTest>().TakeDamage(damage);
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.tag == "Shield")
-        {
-            Destroy(gameObject);
-        }
         if (collision.gameObject.tag == targetTag)
         {
-            collision.gameObject.GetComponent<SpaceShip>().TakeDamage(damage);
+            collision.gameObject.GetComponent<SpaceShip>().TakeDamage(damage, shooter);
             Destroy(gameObject);
         }
         if (collision.gameObject.tag == shooterTag)

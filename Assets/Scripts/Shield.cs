@@ -6,6 +6,7 @@ public class Shield : MonoBehaviour
 {
     private int upTime;
     private int cooldown;
+    private Player parent;
 
     public void setUpTime(int UpTime)
     {
@@ -14,6 +15,10 @@ public class Shield : MonoBehaviour
     public void setCooldown(int cooldown)
     {
         this.cooldown = cooldown;
+    }
+    public void setParent(Player player)
+    {
+        this.parent = player;
     }
     // Start is called before the first frame update
     void Start()
@@ -25,5 +30,18 @@ public class Shield : MonoBehaviour
     void Update()
     {
         
+    }
+    void OnTriggerEnter2D (Collider2D collision)
+    {
+        if(collision.gameObject.tag == "projectile")
+        {
+            if (collision.gameObject.GetComponent<Projectile>().getShooter() != parent)
+            {
+                parent.score += 5;
+            }
+        } else
+        {
+            return;
+        }
     }
 }

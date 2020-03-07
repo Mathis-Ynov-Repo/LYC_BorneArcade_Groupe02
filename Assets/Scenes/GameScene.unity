@@ -250,7 +250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 60300738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.232, y: 0, z: 0}
+  m_LocalPosition: {x: 0.264, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 311161293}
@@ -265,6 +265,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 207886123}
+  - component: {fileID: 207886124}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -287,6 +288,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &207886124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207886122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433ab7789322f29408830a34a8094420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
 --- !u!1 &311161291
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,16 +399,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14b37122f58f604baa31eb4d196de70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stocks: 3
   movementSpeed: 5
   baseMovementSpeed: 5
   projectileSpeed: 15
-  baseProjectileSpeed: 10
+  baseProjectileSpeed: 14
   shieldUpTime: 3
   isInvincible: 0
   shieldCD: 6
   pfhealthBar: {fileID: 8018932787323117283, guid: 1c4e20da34484a74080fb94bd6e0e9be,
     type: 3}
+  player: {fileID: 207886124}
   shield: {fileID: 48937739574034602, guid: 5a629ea968c78e048be63ed0949471bb, type: 3}
   projectile: {fileID: 4263217251555862311, guid: 0d8b7b05c9f16e44b81043d106fdba9a,
     type: 3}
@@ -540,6 +554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 436091864}
+  - component: {fileID: 436091865}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Player2
@@ -562,6 +577,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &436091865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436091863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433ab7789322f29408830a34a8094420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
 --- !u!1 &445485580
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +864,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1d2ca48ef45355f4d8bbc12aad4f9be3, type: 3}
-    m_FontSize: 24
+    m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -869,8 +897,8 @@ GameObject:
   - component: {fileID: 749893681}
   - component: {fileID: 749893682}
   m_Layer: 0
-  m_Name: laser_23
-  m_TagString: Untagged
+  m_Name: damagingBorder1
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1148,8 +1176,8 @@ GameObject:
   - component: {fileID: 858295880}
   - component: {fileID: 858295881}
   m_Layer: 0
-  m_Name: laser_23 (3)
-  m_TagString: Untagged
+  m_Name: damagingBorder4
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1573,8 +1601,8 @@ GameObject:
   - component: {fileID: 1021780768}
   - component: {fileID: 1021780767}
   m_Layer: 0
-  m_Name: laser_23 (2)
-  m_TagString: Untagged
+  m_Name: damagingBorder3
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1855,8 +1883,8 @@ GameObject:
   - component: {fileID: 1312163888}
   - component: {fileID: 1312163889}
   m_Layer: 0
-  m_Name: laser_23 (1)
-  m_TagString: Untagged
+  m_Name: damagingBorder2
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2204,7 +2232,7 @@ GameObject:
   - component: {fileID: 1478302818}
   m_Layer: 0
   m_Name: Obstacle
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2423,7 +2451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14b37122f58f604baa31eb4d196de70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stocks: 3
   movementSpeed: 0
   baseMovementSpeed: 7
   projectileSpeed: 0
@@ -2433,6 +2460,7 @@ MonoBehaviour:
   shieldCD: 7
   pfhealthBar: {fileID: 8018932787323117283, guid: 1c4e20da34484a74080fb94bd6e0e9be,
     type: 3}
+  player: {fileID: 436091865}
   shield: {fileID: 48937739574034602, guid: 5a629ea968c78e048be63ed0949471bb, type: 3}
   projectile: {fileID: 3424045851973006970, guid: e4c365e932a031b41b8b3ab0b2587c66,
     type: 3}
@@ -2630,7 +2658,7 @@ GameObject:
   - component: {fileID: 1522987261}
   m_Layer: 0
   m_Name: Obstacle (1)
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2751,7 +2779,7 @@ GameObject:
   - component: {fileID: 1549780425}
   m_Layer: 0
   m_Name: Obstacle (2)
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2973,7 +3001,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1d2ca48ef45355f4d8bbc12aad4f9be3, type: 3}
-    m_FontSize: 24
+    m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -3456,7 +3484,7 @@ GameObject:
   - component: {fileID: 1882470885}
   m_Layer: 0
   m_Name: Obstacle (3)
-  m_TagString: Untagged
+  m_TagString: Border
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
