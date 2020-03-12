@@ -399,8 +399,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14b37122f58f604baa31eb4d196de70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
   movementSpeed: 5
-  baseMovementSpeed: 5
+  baseMovementSpeed: 6
   projectileSpeed: 15
   baseProjectileSpeed: 14
   shieldUpTime: 3
@@ -2451,8 +2452,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14b37122f58f604baa31eb4d196de70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0
-  baseMovementSpeed: 7
+  id: 2
+  movementSpeed: 16.22
+  baseMovementSpeed: 6
   projectileSpeed: 0
   baseProjectileSpeed: 15
   shieldUpTime: 6

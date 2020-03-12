@@ -6,7 +6,7 @@ public class SpaceShip : MonoBehaviour
 {
     //attributes
 
-    private int id;
+    public int id;
     //public int stocks;
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
@@ -56,7 +56,7 @@ public class SpaceShip : MonoBehaviour
         healthBarTransform.parent = transform;
         HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
 
-        
+
         healthBar.Setup(healthSystem);
 
         //Physics.IgnoreLayerCollision(8, 8);
@@ -102,9 +102,10 @@ public class SpaceShip : MonoBehaviour
 
         if (isReloading)
         {
-            if (Input.GetButtonUp("Fire2"))
+            if (Input.GetButtonDown("FireShield " + id))
             {
                 StartCoroutine(Protect());
+                return;
             }
             else
             {
@@ -117,17 +118,17 @@ public class SpaceShip : MonoBehaviour
             ReloadCoroutine = StartCoroutine(Reload());
             return;
         }
-        
-        if (Input.GetButtonDown("Fire1"))
+
+        if (Input.GetButtonDown("FireProjectile " + id))
         {
-            if(Time.time > nextShootingTime )
+            if (Time.time > nextShootingTime)
             {
                 Shoot();
                 nextShootingTime = Time.time + fireRate;
             }
-            
+
         }
-        if (Input.GetButtonUp("Fire2"))
+        if (Input.GetButtonDown("FireShield " + id))
         {
             StartCoroutine(Protect());
         }
@@ -162,7 +163,7 @@ public class SpaceShip : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
         isInvincible = false;
-        if(isReloading)
+        if (isReloading)
         {
             isReloading = false;
             StopCoroutine(ReloadCoroutine);
@@ -189,7 +190,8 @@ public class SpaceShip : MonoBehaviour
             nextFireTime = Time.time + shieldCD;
             yield return new WaitForSeconds(shieldUpTime);
             isShielded = false;
-        } else
+        }
+        else
         {
             Debug.Log("Ya pas shield");
         }
@@ -197,7 +199,7 @@ public class SpaceShip : MonoBehaviour
     }
     public void TakeDamage(int damage, Player opponent)
     {
-        if(!isShielded && !isInvincible)
+        if (!isShielded && !isInvincible)
         {
             opponent.score += 10;
             healthSystem.Damage(damage);
@@ -223,7 +225,7 @@ public class SpaceShip : MonoBehaviour
 
                 healthBar.Setup(healthSystem);
             }
-        } 
+        }
 
     }
     public void TakeDamage(int damage)
@@ -263,8 +265,8 @@ public class SpaceShip : MonoBehaviour
 
     public void Move(float speed)
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal " + id);
+        float vertical = Input.GetAxisRaw("Vertical " + id);
 
         Vector3 direction = new Vector3(horizontal, vertical, 0.0f);
         if (direction != Vector3.zero)
