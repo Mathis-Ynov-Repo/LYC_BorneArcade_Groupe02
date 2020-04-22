@@ -7,7 +7,6 @@ public class SpaceShip : MonoBehaviour
     //attributes
 
     public int id;
-    //public int stocks;
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
     public float movementSpeed;
@@ -29,11 +28,15 @@ public class SpaceShip : MonoBehaviour
     public int shieldCD;
     public Transform pfhealthBar;
     public Player player;
+    public Player opponent;
 
     public Shield shield;
 
     public Projectile projectile;
     public Transform shootingPoint;
+
+    //Database
+    public DB db;
 
     //Text
 
@@ -45,10 +48,12 @@ public class SpaceShip : MonoBehaviour
     //variable
     Coroutine ReloadCoroutine = null;
 
+
     // Start is called before the first frame update
     void Start()
     {
         currentAmmo = maxAmmo;
+        
         StocksLeftText.text = player.GetStocks().ToString();
 
         Transform healthBarTransform = Instantiate(pfhealthBar, transform.position + transform.right * -1.1f, Quaternion.Euler(0, 0, 90));
@@ -260,6 +265,8 @@ public class SpaceShip : MonoBehaviour
     }
     void Die()
     {
+        db.InsertScore(player.pseudo, player.score);
+        db.InsertScore(opponent.pseudo, opponent.score);
         Destroy(gameObject);
     }
 

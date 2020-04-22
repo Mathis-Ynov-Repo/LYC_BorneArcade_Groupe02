@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  pseudo: Molo
 --- !u!1 &311161291
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,10 +411,12 @@ MonoBehaviour:
   pfhealthBar: {fileID: 8018932787323117283, guid: 1c4e20da34484a74080fb94bd6e0e9be,
     type: 3}
   player: {fileID: 207886124}
+  opponent: {fileID: 436091865}
   shield: {fileID: 48937739574034602, guid: 5a629ea968c78e048be63ed0949471bb, type: 3}
   projectile: {fileID: 4263217251555862311, guid: 0d8b7b05c9f16e44b81043d106fdba9a,
     type: 3}
   shootingPoint: {fileID: 60300739}
+  db: {fileID: 1334189186}
   ammoText: {fileID: 1276571565}
   maxAmmoText: {fileID: 794358620}
   ShieldRemainingCooldownText: {fileID: 816137930}
@@ -591,6 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  pseudo: Joh
 --- !u!1 &445485580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,6 +1998,49 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.99, y: 0.04}
   m_EdgeRadius: 0
+--- !u!1 &1334189185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1334189187}
+  - component: {fileID: 1334189186}
+  m_Layer: 0
+  m_Name: DBInterface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1334189186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334189185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34027a9843bd894b8a24802a24a1187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1334189187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334189185}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.29054183, y: -0.87974226, z: -1256.4414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1430819238
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,10 +2510,12 @@ MonoBehaviour:
   pfhealthBar: {fileID: 8018932787323117283, guid: 1c4e20da34484a74080fb94bd6e0e9be,
     type: 3}
   player: {fileID: 436091865}
+  opponent: {fileID: 207886124}
   shield: {fileID: 48937739574034602, guid: 5a629ea968c78e048be63ed0949471bb, type: 3}
   projectile: {fileID: 3424045851973006970, guid: e4c365e932a031b41b8b3ab0b2587c66,
     type: 3}
   shootingPoint: {fileID: 559315845}
+  db: {fileID: 1334189186}
   ammoText: {fileID: 980877160}
   maxAmmoText: {fileID: 1502583720}
   ShieldRemainingCooldownText: {fileID: 1503203142}
@@ -3658,46 +3707,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1889356991}
   m_CullTransparentMesh: 0
---- !u!1 &2057857873
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2057857874}
-  - component: {fileID: 2057857875}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2057857874
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057857873}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7747703, y: -0.6524531, z: -553.83203}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2057857875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2057857873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34027a9843bd894b8a24802a24a1187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
