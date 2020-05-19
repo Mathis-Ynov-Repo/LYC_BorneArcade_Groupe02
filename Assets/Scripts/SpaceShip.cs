@@ -6,7 +6,8 @@ public class SpaceShip : MonoBehaviour
 {
     //attributes
 
-    public int id;
+    private int id;
+    //public int stocks;
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
     public float movementSpeed;
@@ -28,15 +29,11 @@ public class SpaceShip : MonoBehaviour
     public int shieldCD;
     public Transform pfhealthBar;
     public Player player;
-    public Player opponent;
 
     public Shield shield;
 
     public Projectile projectile;
     public Transform shootingPoint;
-
-    //Database
-    public DB db;
 
     //Text
 
@@ -48,12 +45,10 @@ public class SpaceShip : MonoBehaviour
     //variable
     Coroutine ReloadCoroutine = null;
 
-
     // Start is called before the first frame update
     void Start()
     {
         currentAmmo = maxAmmo;
-        
         StocksLeftText.text = player.GetStocks().ToString();
 
         Transform healthBarTransform = Instantiate(pfhealthBar, transform.position + transform.right * -1.1f, Quaternion.Euler(0, 0, 90));
@@ -61,7 +56,7 @@ public class SpaceShip : MonoBehaviour
         healthBarTransform.parent = transform;
         HealthBar healthBar = healthBarTransform.GetComponent<HealthBar>();
 
-
+        
         healthBar.Setup(healthSystem);
 
         //Physics.IgnoreLayerCollision(8, 8);
@@ -107,10 +102,9 @@ public class SpaceShip : MonoBehaviour
 
         if (isReloading)
         {
-            if (Input.GetButtonDown("FireShield " + id))
+            if (Input.GetButtonUp("Fire2"))
             {
                 StartCoroutine(Protect());
-                return;
             }
             else
             {
@@ -123,17 +117,17 @@ public class SpaceShip : MonoBehaviour
             ReloadCoroutine = StartCoroutine(Reload());
             return;
         }
-
-        if (Input.GetButtonDown("FireProjectile " + id))
+        
+        if (Input.GetButtonDown("Fire1"))
         {
-            if (Time.time > nextShootingTime)
+            if(Time.time > nextShootingTime )
             {
                 Shoot();
                 nextShootingTime = Time.time + fireRate;
             }
-
+            
         }
-        if (Input.GetButtonDown("FireShield " + id))
+        if (Input.GetButtonUp("Fire2"))
         {
             StartCoroutine(Protect());
         }
@@ -168,7 +162,7 @@ public class SpaceShip : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
         transform.GetChild(1).gameObject.SetActive(true);
         isInvincible = false;
-        if (isReloading)
+        if(isReloading)
         {
             isReloading = false;
             StopCoroutine(ReloadCoroutine);
@@ -195,8 +189,7 @@ public class SpaceShip : MonoBehaviour
             nextFireTime = Time.time + shieldCD;
             yield return new WaitForSeconds(shieldUpTime);
             isShielded = false;
-        }
-        else
+        } else
         {
             Debug.Log("Ya pas shield");
         }
@@ -204,7 +197,7 @@ public class SpaceShip : MonoBehaviour
     }
     public void TakeDamage(int damage, Player opponent)
     {
-        if (!isShielded && !isInvincible)
+        if(!isShielded && !isInvincible)
         {
             opponent.score += 10;
             healthSystem.Damage(damage);
@@ -230,7 +223,7 @@ public class SpaceShip : MonoBehaviour
 
                 healthBar.Setup(healthSystem);
             }
-        }
+        } 
 
     }
     public void TakeDamage(int damage)
@@ -265,15 +258,13 @@ public class SpaceShip : MonoBehaviour
     }
     void Die()
     {
-        db.InsertScore(player.pseudo, player.score);
-        db.InsertScore(opponent.pseudo, opponent.score);
         Destroy(gameObject);
     }
 
     public void Move(float speed)
     {
-        float horizontal = Input.GetAxisRaw("Horizontal " + id);
-        float vertical = Input.GetAxisRaw("Vertical " + id);
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(horizontal, vertical, 0.0f);
         if (direction != Vector3.zero)

@@ -5,8 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int score;
-    public string pseudo;
-    private int stocks = 1;
+    private int stocks = 3;
     // Start is called before the first frame update
     void Start()
     {
