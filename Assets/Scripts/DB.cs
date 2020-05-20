@@ -17,7 +17,7 @@ public class DB : MonoBehaviour
 
 		//InsertScore("Kayne", 111);
 
-		//GetScores();
+		GetScores();
 
 	}
 
