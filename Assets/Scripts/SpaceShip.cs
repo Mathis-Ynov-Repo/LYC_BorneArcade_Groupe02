@@ -45,6 +45,8 @@ public class SpaceShip : MonoBehaviour
     public Text ShieldRemainingCooldownText;
     public Text StocksLeftText;
 
+    public Text WinnerText;
+
     //variable
     Coroutine ReloadCoroutine = null;
 
@@ -267,7 +269,11 @@ public class SpaceShip : MonoBehaviour
     {
         db.InsertScore(player.pseudo, player.score);
         db.InsertScore(opponent.pseudo, opponent.score);
+        WinnerText.text = opponent.pseudo + " WINS";
+        FindObjectOfType<SpaceShip>().isInvincible = true;
+
         Destroy(gameObject);
+        FindObjectOfType<GameManager>().EndGame();
     }
 
     public void Move(float speed)
