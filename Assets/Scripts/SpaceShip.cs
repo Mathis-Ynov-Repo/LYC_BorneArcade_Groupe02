@@ -66,7 +66,6 @@ public class SpaceShip : MonoBehaviour
 
         healthBar.Setup(healthSystem);
 
-        //Physics.IgnoreLayerCollision(8, 8);
         movementSpeed = baseMovementSpeed;
         projectileSpeed = baseProjectileSpeed;
 
@@ -182,14 +181,11 @@ public class SpaceShip : MonoBehaviour
     {
         if (Time.time > nextFireTime)
         {
-            //GameObject prefab = Resources.Load("bouclier") as GameObject;
 
             Quaternion rotation = transform.rotation;
             var position = transform.position;
-            //GameObject shieldObject = Instantiate(prefab, position, rotation);
             Shield shieldObject = Instantiate(shield, position, rotation);
             shieldObject.transform.parent = transform;
-            //Shield shield = shieldObject.GetComponent<Shield>();
             shieldObject.setUpTime(shieldUpTime);
             shieldObject.tag = "Shield";
             shieldObject.setParent(player);
@@ -267,9 +263,9 @@ public class SpaceShip : MonoBehaviour
     }
     void Die()
     {
-        db.InsertScore(player.pseudo, player.score);
-        db.InsertScore(opponent.pseudo, opponent.score);
-        WinnerText.text = opponent.pseudo + " WINS";
+        db.InsertScore(player.GetPseudo(), player.score);
+        db.InsertScore(opponent.GetPseudo(), opponent.score);
+        WinnerText.text = opponent.GetPseudo() + " WINS";
         FindObjectOfType<SpaceShip>().isInvincible = true;
 
         Destroy(gameObject);
