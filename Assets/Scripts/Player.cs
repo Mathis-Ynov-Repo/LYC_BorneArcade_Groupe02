@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
     {
         this.stocks = stocks;
     }
+    public void SetPseudo(string pseudo)
+    {
+        this.pseudo = pseudo;
+    }
     public int GetStocks()
     {
         return this.stocks;

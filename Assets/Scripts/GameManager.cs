@@ -9,6 +9,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         endGameScreen.SetActive(false);
+        var players = FindObjectsOfType<Player>();
+        var pseudoManager = FindObjectOfType<PseudoManager>();
+        if (players[0].name == "Player1")
+        {
+            players[0].SetPseudo(pseudoManager.GetPlayer1Pseudo());
+            players[1].SetPseudo(pseudoManager.GetPlayer2Pseudo());
+        } else
+        {
+            players[1].SetPseudo(pseudoManager.GetPlayer1Pseudo());
+            players[0].SetPseudo(pseudoManager.GetPlayer2Pseudo());
+        }
     }
     public void EndGame()
     {
