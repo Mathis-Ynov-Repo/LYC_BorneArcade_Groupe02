@@ -14,8 +14,16 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+  public void GoToHighScores()
+    {
+        SceneManager.LoadScene(2);
+    }
+    public void GoToControls()
+    {
+        SceneManager.LoadScene(3);
+    }
 
-  public void QuitGame()
+    public void QuitGame()
   {
     Debug.Log("QUIT!");
     Application.Quit();
