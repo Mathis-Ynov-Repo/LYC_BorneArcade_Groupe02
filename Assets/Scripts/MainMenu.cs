@@ -17,6 +17,17 @@ public class MainMenu : MonoBehaviour
     Application.Quit();
   }
 
+  public void ReplayGame()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+  }
+
+  public void ReturnToMainMenu()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+  }
+
+
 
 }
 
