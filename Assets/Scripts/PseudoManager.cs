@@ -5,7 +5,7 @@ using UnityEngine;
 public class PseudoManager : MonoBehaviour
 {
 
-    private string Player1Name = "Player 1";
+    public string Player1Name = "Player 1";
     public string Player2Name = "Player 2";
     
     void Awake()
