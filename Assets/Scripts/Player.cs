@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public Text PseudoText;
     public Text ScoreText;
     private string pseudo;
-    private int stocks = 1;
+    private int stocks = 3;
     // Start is called before the first frame update
     void Start()
     {

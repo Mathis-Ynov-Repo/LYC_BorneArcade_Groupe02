@@ -3310,9 +3310,9 @@ MonoBehaviour:
   baseMovementSpeed: 6
   projectileSpeed: 0
   baseProjectileSpeed: 15
-  shieldUpTime: 6
+  shieldUpTime: 3
   isInvincible: 0
-  shieldCD: 7
+  shieldCD: 10
   pfhealthBar: {fileID: 8018932787323117283, guid: 1c4e20da34484a74080fb94bd6e0e9be,
     type: 3}
   player: {fileID: 436091865}

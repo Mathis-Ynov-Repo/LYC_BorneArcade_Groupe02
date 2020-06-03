@@ -10,11 +10,11 @@ public class SpaceShip : MonoBehaviour
     //private int lifePoints = 100;
     private HealthSystem healthSystem = new HealthSystem(100);
     public float movementSpeed;
-    public float baseMovementSpeed = 100;
+    private float baseMovementSpeed = 6;
     public float projectileSpeed;
-    public float baseProjectileSpeed;
+    private float baseProjectileSpeed = 15;
     private string color;
-    public int shieldUpTime;
+    private int shieldUpTime = 3;
     private float nextFireTime = 0;
     private float nextShootingTime = 0;
     private float fireRate = 0.15f;
@@ -25,7 +25,7 @@ public class SpaceShip : MonoBehaviour
     private bool isReloading = false;
     private bool isShielded = false;
     public bool isInvincible = false;
-    public int shieldCD;
+    private int shieldCD = 10;
     public Transform pfhealthBar;
     public Player player;
     public Player opponent;

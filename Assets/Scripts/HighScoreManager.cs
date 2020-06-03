@@ -20,7 +20,8 @@ public class HighScoreManager : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		connectionString = "URI=file:" + Application.dataPath + "/" + "GAME_DB.db";
+		connectionString = "URI=file:" + Application.persistentDataPath + "/" + "GAME_DB.db";
+		Debug.Log(connectionString);
 
 		showScores();
 
